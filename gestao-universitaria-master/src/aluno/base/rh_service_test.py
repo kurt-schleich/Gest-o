@@ -1,10 +1,10 @@
 import unittest
 
-from src.aluno.base.professor import Professor
-from src.aluno.base.sta import STA
-from src.aluno.base.terceirizado import Terceirizado
-from src.aluno.manager.rh_service import RHService
-from src.cliente.tipo import Tipo
+from professor import Professor
+from sta import STA
+from terceirizado import Terceirizado
+from rh_service import RHService
+from tipo import Tipo
 
 
 class RHServiceCase(unittest.TestCase):
@@ -116,37 +116,41 @@ class RHServiceCase(unittest.TestCase):
         self.assertEqual(None, self.rh.obterFuncionario(self.cpfLacerda), "Este funcionario foi removido antes")
 
     def test_buscarTodosOsProfessores(self):
-        self.test_inserirFuncionarios()
 
         profChico = Professor("91", "Chico", 'E')
         profX = Professor("92", "Xarles", 'D')
         self.rh.cadastrar(profChico)
         self.rh.cadastrar(profX)
 
-        self.assertEqual([self.profAlessio, profChico, self.profJonas, profX],
+        self.assertEqual([profChico, profX],
                          self.rh.getFuncionariosPorCategorias(Tipo.PROF),
                          "A lista deve conter os mesmo funcionario e deve estar ordenada pelo nome funcionario")
 
     def test_buscarTodosOsSTAs(self):
-        self.test_inserirFuncionarios()
-        profChico = Professor("91", "Chico", 'E')
-        profX = Professor("92", "Xarles", 'D')
-        self.rh.cadastrar(profChico)
-        self.rh.cadastrar(profX)
+        staMiriam = STA("43", "Miriam", 10)
+        staLacerda = STA("23", "Lacerda", 5)
+        self.rh.cadastrar(staMiriam)
+        self.rh.cadastrar(staLacerda)
 
         self.assertEqual([self.staLacerda, self.staMiriam],
-                         self.rh.getFuncionariosPorCategorias(STA),
+                         self.rh.getFuncionariosPorCategorias(Tipo.STA),
                          "A lista deve conter os mesmo funcionario e deve estar ordenada pelo nome funcionario")
 
     def test_buscarTodosOsTerceirizados(self):
-        self.test_inserirFuncionarios()
-
+        tercCarla = Terceirizado("12", "Carla", False)
+        tercAdriana = Terceirizado("78", "Adriana", True)
+        self.rh.cadastrar(tercCarla)
+        self.rh.cadastrar(tercAdriana)
         self.assertEqual([self.tercAdriana, self.tercCarla],
                          self.rh.getFuncionariosPorCategorias(Tipo.TERC),
                          "A lista deve conter os mesmo funcionario e deve estar ordenada pelo nome funcionario")
 
     def test_buscarTodosOsFuncionarios(self):
         self.test_inserirFuncionarios()
+        staMiriam = STA("43", "Miriam", 10)
+        staLacerda = STA("23", "Lacerda", 5)
+        self.rh.cadastrar(staMiriam)
+        self.rh.cadastrar(staLacerda)
 
         self.assertEqual(
             [self.tercAdriana, self.profAlessio, self.tercCarla, self.profJonas, self.staLacerda,

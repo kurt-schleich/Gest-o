@@ -1,10 +1,15 @@
 class Funcionario:
+    def __init__(self, cpf, nome):
+        self.nome = nome
+        self.cpf = cpf
+        self.diarias = 0
+        self.lucros = 0
 
     def getNome(self) -> str:
-        return None
+        return self.nome
 
     def getCpf(self) -> str:
-        return None
+        return self.cpf
 
     def getSalario(self) -> float:
-        return 0.0
+        pass
